@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/assets/logo_symbol_new.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evolt - Revolutionizing EV Charging in Kenya and Beyond</title>
+    <script type="module" crossorigin src="/assets/index-D8c-r1Md.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Dt5U4pVd.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Wait for the page to load and then replace feature illustrations
+      function replaceFeatureIllustrations() {
+        const illustrations = [
+          '/assets/feature_illustrations/ChargingStationLocatorfeatureillustration.png',
+          '/assets/feature_illustrations/EffortlessConnectivityfeatureillustration.png',
+          '/assets/feature_illustrations/Turn-by-TurnNavigation1.png',
+          '/assets/feature_illustrations/Community_Rewardsfeatureillustration.png',
+          '/assets/feature_illustrations/SmartTripPlanningfeatureillustration.png',
+          '/assets/feature_illustrations/SmoothIn-AppPaymentsfeatureillustration.png',
+          '/assets/feature_illustrations/constantinnovationfeatureillustration.png'
+        ];
+        
+        const altTexts = [
+          'Charging Station Locator',
+          'Effortless Connectivity',
+          'Turn-by-Turn Navigation',
+          'Community and Rewards',
+          'Smart Trip Planning',
+          'Smooth In-App Payments',
+          'Constant Innovation'
+        ];
+        
+        // Find all elements containing "Feature Illustration" text
+        const walker = document.createTreeWalker(
+          document.body,
+          NodeFilter.SHOW_TEXT,
+          null,
+          false
+        );
+        
+        const textNodes = [];
+        let node;
+        while (node = walker.nextNode()) {
+          if (node.textContent.trim() === 'Feature Illustration') {
+            textNodes.push(node);
+          }
+        }
+        
+        // Replace each "Feature Illustration" with an image
+        textNodes.forEach((textNode, index) => {
+          if (index < illustrations.length) {
+            const img = document.createElement('img');
+            img.src = illustrations[index];
+            img.alt = altTexts[index];
+            img.className = 'w-full h-auto mx-auto rounded-lg shadow-lg';
+            img.style.width = '250px';
+            img.style.height = '250px';
+            img.style.objectFit = 'contain';
+            textNode.parentNode.replaceChild(img, textNode);
+          }
+        });
+        
+        // Also replace the battery swapping image
+        const batteryImages = document.querySelectorAll('img[src*="battery_swapping"]');
+        batteryImages.forEach(img => {
+          img.src = '/assets/feature_illustrations/batteryswappingfeatureillustration.png';
+          img.alt = 'Battery Swapping';
+          img.className = 'w-full h-auto mx-auto rounded-lg shadow-lg';
+          img.style.width = '250px';
+          img.style.height = '250px';
+          img.style.objectFit = 'contain';
+        });
+      }
+      
+      // Run the replacement function after a delay to ensure React has rendered
+      setTimeout(replaceFeatureIllustrations, 2000);
+      
+      // Also run when navigating to different pages
+      let lastUrl = location.href;
+      new MutationObserver(() => {
+        const url = location.href;
+        if (url !== lastUrl) {
+          lastUrl = url;
+          setTimeout(replaceFeatureIllustrations, 1000);
+        }
+      }).observe(document, {subtree: true, childList: true});
+    </script>
+  </body>
+</html>
